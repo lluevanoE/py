@@ -1,4 +1,5 @@
 import turtle
+import winsound
 
 window = turtle.Screen()
 window.title("prueba de pong")
@@ -54,22 +55,22 @@ puntuacion.write("Jugador1 : 0     Jugador2 : 0", align="center", font=("Courrie
 #Movimiento de raqueta
 def raqueta_d_arriba():
     y = raqueta_d.ycor()
-    y += 20
+    y += 30
     raqueta_d.sety(y)
 
 def raqueta_d_abajo():
     y = raqueta_d.ycor()
-    y -= 20
+    y -= 30
     raqueta_d.sety(y)
 
 def raqueta_i_arriba():
     y = raqueta_i.ycor()
-    y += 20
+    y += 30
     raqueta_i.sety(y)
 
 def raqueta_i_abajo():
     y = raqueta_i.ycor()
-    y -= 20
+    y -= 30
     raqueta_i.sety(y)
 
 #Movimiento de pelota
@@ -93,17 +94,19 @@ while True:
     if pelota.ycor() > 290:
         pelota.sety(290)
         pelota.dy *= -1
+        winsound.PlaySound("bounce", winsound.SND_FILENAME | winsound.SND_ASYNC)
 
     if pelota.ycor() < -290:
         pelota.sety(-290)
         pelota.dy *= -1
-
+        winsound.PlaySound("bounce", winsound.SND_FILENAME | winsound.SND_ASYNC)
     if pelota.xcor() > 390:
         pelota.goto(0,0)
         pelota.dx *= -1
         puntos_d += 1
         puntuacion.clear()
         puntuacion.write("Jugador1 : {}     Jugador2 : {}".format(puntos_d, puntos_i), align="center", font=("Courrier", 20, "normal"))
+        winsound.PlaySound("point", winsound.SND_FILENAME | winsound.SND_ASYNC)
 
     if pelota.xcor() < -390:
         pelota.goto(0,0)
@@ -111,11 +114,14 @@ while True:
         puntos_i += 1
         puntuacion.clear()
         puntuacion.write("Jugador1 : {}     Jugador2 : {}".format(puntos_d, puntos_i), align="center", font=("Courrier", 20, "normal"))
+        winsound.PlaySound("point", winsound.SND_FILENAME | winsound.SND_ASYNC)
 
     #colision de raqueta
-    if (pelota.xcor() > 340) and (pelota.xcor() < 350) and (pelota.ycor() < raqueta_i.ycor() + 40) and (pelota.ycor() > raqueta_i.ycor() -40):
+    if (pelota.xcor() > 340) and (pelota.xcor() < 350) and (pelota.ycor() < raqueta_i.ycor() + 42) and (pelota.ycor() > raqueta_i.ycor() -42):
         pelota.setx(340)
         pelota.dx *= -1
-    if (pelota.xcor() < -340) and (pelota.xcor() > -350) and (pelota.ycor() < raqueta_d.ycor() +40) and (pelota.ycor() > raqueta_d.ycor() -40):
+        winsound.PlaySound("hit", winsound.SND_FILENAME | winsound.SND_ASYNC)
+    if (pelota.xcor() < -340) and (pelota.xcor() > -350) and (pelota.ycor() < raqueta_d.ycor() +42) and (pelota.ycor() > raqueta_d.ycor() -42):
             pelota.setx(-340)
             pelota.dx *= -1
+            winsound.PlaySound("hit", winsound.SND_FILENAME | winsound.SND_ASYNC)
